@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
 }
 
 android {
@@ -53,4 +54,12 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    implementation(libs.retrofit2.retrofit)
+    implementation(libs.retrofit2.convertermoshi)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.retrofit2.converterscalars)
+
+    implementation(libs.moshi)
+    ksp(libs.moshi.codegen)
+
 }

@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import edu.oregonstate.cs492.MovieWatchListManager.ui.theme.MovieWatchListManagerTheme
 
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,8 +28,13 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+
     }
+
+
 }
+
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
