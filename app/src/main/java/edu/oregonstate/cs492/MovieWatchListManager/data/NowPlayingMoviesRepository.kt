@@ -4,14 +4,14 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class PopularMoviesRepository(
+class NowPlayingMoviesRepository(
     private val service: TMDBService,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
-    suspend fun loadPopularMovies(): Result<List<Movie>> =
+    suspend fun loadNowPlayingMovies(): Result<List<Movie>> =
         withContext(ioDispatcher){
             try {
-                val res = service.getPopularMovies()
+                val res = service.getNowPlayingMovies()
                 if(res.isSuccessful){
                     Result.success(res.body()?.results ?: listOf())
                 }else{

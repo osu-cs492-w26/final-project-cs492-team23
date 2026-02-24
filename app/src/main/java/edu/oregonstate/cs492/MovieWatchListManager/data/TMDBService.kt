@@ -1,6 +1,5 @@
 package edu.oregonstate.cs492.MovieWatchListManager.data
 
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -8,9 +7,17 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 //Put your key here:
-val api_key = ""
+val api_key = "3a8c9a521e095c421002d82eea9385a7"
 interface TMDBService {
 
+
+    //GET /movie/now_playing
+    @GET("movie/now_playing")
+    suspend fun getNowPlayingMovies(
+        @Query("language") lang: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("api_key") key: String =  api_key
+    ): Response<MovieResults>
 
     //GET /movie/popular
     @GET("movie/popular")
@@ -18,14 +25,25 @@ interface TMDBService {
         @Query("language") lang: String = "en-US",
         @Query("page") page: Int = 1,
         @Query("api_key") key: String =  api_key
-    ): Response<PopularMoviesResults>
+    ): Response<MovieResults>
 
-//    @GET("movie/{movie_id}/videos")
-//    suspend fun getMovieVideos(
-//        @Path("movie_id") movieID: Int = 1236153,
-//        @Query("language") lang: String = "en-US",
-//        @Query("api_key") key: String = api_key
-//    ): Respond<String>
+    //GET /movie/top_rated
+    @GET("movie/top_rated")
+    suspend fun getTopRatedMovies(
+        @Query("language") lang: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("api_key") key: String =  api_key
+    ): Response<MovieResults>
+
+    //GET /movie/upcoming
+    @GET("movie/upcoming")
+    suspend fun getUpcomingMovies(
+        @Query("language") lang: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("api_key") key: String =  api_key
+    ): Response<MovieResults>
+
+
 
 
     companion object {

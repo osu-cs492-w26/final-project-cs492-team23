@@ -58,8 +58,12 @@ dependencies {
     implementation(libs.retrofit2.convertermoshi)
     implementation(libs.kotlinx.coroutines.android)
     implementation(libs.retrofit2.converterscalars)
+    implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.ksp.symbol.processing.api)
 
     implementation(libs.moshi)
     ksp(libs.moshi.codegen)
+    ksp(libs.androidx.room.compiler)
 
 }
