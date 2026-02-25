@@ -4,6 +4,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 //Put your key here:
@@ -43,6 +44,43 @@ interface TMDBService {
         @Query("api_key") key: String =  api_key
     ): Response<MovieResults>
 
+    //GET /search/movie
+    @GET("search/movie")
+    suspend fun searchForMovie(
+        //query is required
+        @Query("query") query: String,
+        @Query("language") lang: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("api_key") key: String =  api_key
+    ): Response<MovieResults>
+
+    //GET /movie/{movie_id}/videos
+    @GET("movie/{movie_id}/videos")
+    suspend fun getMovieVideos(
+        //movie_id required
+        @Path("movie_id") movieId: Int,
+        @Query("language") lang: String = "en-US",
+        @Query("api_key") key: String =  api_key
+    ): Response<MovieVideos>
+
+    //GET /movie/{movie_id}/reviews
+    @GET("movie/{movie_id}/reviews")
+    suspend fun getMovieReviews(
+        //movie_id required
+        @Path("movie_id") movieId: Int,
+        @Query("language") lang: String = "en-US",
+        @Query("page") page: Int = 1,
+        @Query("api_key") key: String =  api_key
+    ): Response<MovieReviews>
+
+    //GET /movie/{movie_id}
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetails(
+        //movie_id required
+        @Path("movie_id") movieId: Int,
+        @Query("language") lang: String = "en-US",
+        @Query("api_key") key: String =  api_key
+    ): Response<MovieDetails>
 
 
 
