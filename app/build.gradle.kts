@@ -61,6 +61,7 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
     implementation(libs.ksp.symbol.processing.api)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
 
     implementation(libs.moshi)
     ksp(libs.moshi.codegen)
