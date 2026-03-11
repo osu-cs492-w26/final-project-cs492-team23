@@ -11,43 +11,31 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import edu.oregonstate.cs492.MovieWatchListManager.ui.theme.MovieWatchListManagerTheme
 
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            MovieWatchListManagerTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+        setContentView(R.layout.activity_main)
+
+
+        //Feel free to move the code from below into a dedicated fragment, make sure you move the Youtube view in the activity_main.xml too
+        val youtubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view)
+        youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                super.onReady(youTubePlayer)
+                //Can replace programmatically with the key from the api, currently it should show the Fight Club trailer
+                val videoId = "O-b2VfmmbyA"
+                youTubePlayer.loadVideo(videoId, 0F)
             }
-        }
-
-
+        })
     }
 
 
 }
 
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    MovieWatchListManagerTheme {
-        Greeting("Android")
-    }
-}

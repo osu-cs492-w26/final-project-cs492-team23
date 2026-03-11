@@ -62,7 +62,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.ksp.symbol.processing.api)
     implementation(libs.androidx.lifecycle.livedata.ktx)
-
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:13.0.0")
     implementation(libs.moshi)
     ksp(libs.moshi.codegen)
     ksp(libs.androidx.room.compiler)
