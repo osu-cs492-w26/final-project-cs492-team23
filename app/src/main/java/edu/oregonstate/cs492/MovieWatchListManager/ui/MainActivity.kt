@@ -21,6 +21,8 @@ class MainActivity : ComponentActivity() {
 
         //Feel free to move the code from below into a dedicated fragment, make sure you move the YouTube view in the activity_main.xml too
         val youtubePlayerView = findViewById<YouTubePlayerView>(R.id.youtube_player_view)
+        lifecycle.addObserver(youtubePlayerView)
+
         youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener(){
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 super.onReady(youTubePlayer)
@@ -34,7 +36,7 @@ class MainActivity : ComponentActivity() {
         val reviewButton = findViewById<Button>(R.id.review_button)
         reviewButton.setOnClickListener {
             //Can change this url by putting in the movie_id e.g. https://www.themoviedb.org/movie/{movie_id}/reviews
-            val uri = "https://www.themoviedb.org/movie/502356/reviews".toUri()
+            val uri = "https://www.themoviedb.org/movie/550/reviews".toUri()
             val intent = Intent(Intent.ACTION_VIEW, uri)
 
             //Call the intent
