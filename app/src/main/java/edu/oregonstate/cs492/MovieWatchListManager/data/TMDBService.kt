@@ -63,16 +63,6 @@ interface TMDBService {
         @Query("api_key") key: String =  api_key
     ): Response<MovieVideos>
 
-    //GET /movie/{movie_id}/reviews
-    @GET("movie/{movie_id}/reviews")
-    suspend fun getMovieReviews(
-        //movie_id required
-        @Path("movie_id") movieId: Int,
-        @Query("language") lang: String = "en-US",
-        @Query("page") page: Int = 1,
-        @Query("api_key") key: String =  api_key
-    ): Response<MovieReviews>
-
     //GET /movie/{movie_id}
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(
