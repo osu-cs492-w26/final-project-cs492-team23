@@ -1,14 +1,18 @@
-package edu.oregonstate.cs492.MovieWatchListManager.data
+package edu.oregonstate.cs492.MovieWatchListManager.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import edu.oregonstate.cs492.MovieWatchListManager.data.MovieVideosRepository
+import edu.oregonstate.cs492.MovieWatchListManager.data.TMDBService
+import edu.oregonstate.cs492.MovieWatchListManager.data.Video
+import edu.oregonstate.cs492.MovieWatchListManager.util.LoadingStatus
 
-class MovieReviewsViewModel: ViewModel() {
-    private val repository = MovieReviewsRepository(TMDBService.create())
+class MovieVideosViewModel: ViewModel() {
+    private val repository = MovieVideosRepository(TMDBService.Companion.create())
 
-    private val _searchResults = MutableLiveData<List<Review>?>(null)
-    val searchResults: LiveData<List<Review>?> = _searchResults
+    private val _searchResults = MutableLiveData<List<Video>?>(null)
+    val searchResults: LiveData<List<Video>?> = _searchResults
 
     private val _loadingStatus = MutableLiveData<LoadingStatus>(LoadingStatus.SUCCESS)
     val loadingStatus: LiveData<LoadingStatus> = _loadingStatus
@@ -16,7 +20,7 @@ class MovieReviewsViewModel: ViewModel() {
     private val _errorMessage = MutableLiveData<String?>(null)
     val errorMessage: LiveData<String?> = _errorMessage
 
-    suspend fun loadMovieReviews(movieId: Int){
+    suspend fun loadMovieVideos(movieId: Int){
         _loadingStatus.value = LoadingStatus.LOADING
         val result = repository.loadMovieVideos(movieId)
         _searchResults.value = result.getOrNull()

@@ -1,11 +1,15 @@
-package edu.oregonstate.cs492.MovieWatchListManager.data
+package edu.oregonstate.cs492.MovieWatchListManager.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import edu.oregonstate.cs492.MovieWatchListManager.data.Movie
+import edu.oregonstate.cs492.MovieWatchListManager.data.NowPlayingMoviesRepository
+import edu.oregonstate.cs492.MovieWatchListManager.data.TMDBService
+import edu.oregonstate.cs492.MovieWatchListManager.util.LoadingStatus
 
-class UpcomingMoviesViewModel: ViewModel() {
-    private val repository = UpcomingMoviesRepository(TMDBService.create())
+class NowPlayingMoviesViewModel: ViewModel() {
+    private val repository = NowPlayingMoviesRepository(TMDBService.Companion.create())
 
     private val _searchResults = MutableLiveData<List<Movie>?>(null)
     val searchResults: LiveData<List<Movie>?> = _searchResults
@@ -16,9 +20,9 @@ class UpcomingMoviesViewModel: ViewModel() {
     private val _errorMessage = MutableLiveData<String?>(null)
     val errorMessage: LiveData<String?> = _errorMessage
 
-    suspend fun loadUpcomingMovies(){
+    suspend fun loadNowPlayingMovies(){
         _loadingStatus.value = LoadingStatus.LOADING
-        val result = repository.loadUpcomingMovies()
+        val result = repository.loadNowPlayingMovies()
         _searchResults.value = result.getOrNull()
         _errorMessage.value = result.exceptionOrNull()?.message
         _loadingStatus.value = when(result.isSuccess){

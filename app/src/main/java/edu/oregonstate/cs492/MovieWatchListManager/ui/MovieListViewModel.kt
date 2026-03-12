@@ -1,16 +1,19 @@
-package edu.oregonstate.cs492.MovieWatchListManager.data
+package edu.oregonstate.cs492.MovieWatchListManager.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import edu.oregonstate.cs492.MovieWatchListManager.data.AppDatabase
+import edu.oregonstate.cs492.MovieWatchListManager.data.Movie
+import edu.oregonstate.cs492.MovieWatchListManager.data.MovieListRepository
 import kotlinx.coroutines.launch
 
 class MovieListViewModel(application: Application):
     AndroidViewModel(application)
 {
     private val repository = MovieListRepository(
-        AppDatabase.getInstance(application).movieDao()
+        AppDatabase.Companion.getInstance(application).movieDao()
     )
 
     val movieList = repository.getAllMoviesInList().asLiveData()

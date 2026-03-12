@@ -1,21 +1,11 @@
-package edu.oregonstate.cs492.MovieWatchListManager
+package edu.oregonstate.cs492.MovieWatchListManager.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-import edu.oregonstate.cs492.MovieWatchListManager.ui.theme.MovieWatchListManagerTheme
-
+import edu.oregonstate.cs492.MovieWatchListManager.R
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,5 +27,3 @@ class MainActivity : ComponentActivity() {
 
 
 }
-
-
