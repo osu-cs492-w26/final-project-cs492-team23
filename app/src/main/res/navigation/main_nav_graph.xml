@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/home"
         android:name="edu.oregonstate.cs492.MovieWatchListManager.ui.HomeFragment"
-        android:label="Home"
+        android:label="Movie Watchlist Manager"
         tools:layout="@layout/fragment_home" />
 
     <fragment

@@ -11,6 +11,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@android:color/black"
         android:layout_marginTop="12dp"
+        app:titleMarginStart="22dp"
         app:titleTextColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent" />
 

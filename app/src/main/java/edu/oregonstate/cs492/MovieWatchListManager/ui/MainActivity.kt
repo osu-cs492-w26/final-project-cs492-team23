@@ -25,6 +25,14 @@ class MainActivity : AppCompatActivity() {
         val toolbar = findViewById<MaterialToolbar>(R.id.top_app_bar)
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.home) {
+                toolbar.setLogo(R.drawable.movie_icon)
+            } else {
+                toolbar.logo = null
+            }
+        }
+
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNav.setupWithNavController(navController)
     }
