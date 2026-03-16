@@ -66,5 +66,9 @@ dependencies {
     implementation(libs.moshi)
     ksp(libs.moshi.codegen)
     ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.recyclerview)
 
 }
