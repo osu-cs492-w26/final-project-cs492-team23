@@ -26,6 +26,7 @@ import kotlinx.coroutines.launch
 class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     private val videosViewModel: MovieVideosViewModel by viewModels()
     private val streamingViewModel: StreamingServicesViewModel by viewModels()
+    private val detailsViewModel: MovieDetailsViewModel by viewModels()
     private var youTubePlayer: YouTubePlayer? = null
     private var currentVideoId: String? = null
 
@@ -47,8 +48,6 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         tvTitle.text = movie.title
         tvReleaseDate.text = movie.releaseDate
         tvOverview.text = movie.overview
-        // placeholders
-        tvRuntime.text = "Runtime: 2hr"
         tvGenre1.text = "Action"
         tvGenre2.text = "Drama"
 
@@ -58,7 +57,9 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
                 this@MovieDetailsFragment.youTubePlayer = youTubePlayer
-                currentVideoId?.let { youTubePlayer.cueVideo(it, 0F) }
+                currentVideoId?.let { 
+                    youTubePlayer.cueVideo(it, 0F)
+                }
             }
         })
 
@@ -93,12 +94,21 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             }
         }
 
+        // get n convert runtime
+        detailsViewModel.searchResults.observe(viewLifecycleOwner) { details ->
+            details?.let {
+                val hours = it.runtime / 60
+                val minutes = it.runtime % 60
+                tvRuntime.text = "Runtime: ${hours}hr ${minutes}min"
+            }
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             videosViewModel.loadMovieVideos(movie.movieId)
             streamingViewModel.loadStreamingServices(movie.movieId)
+            detailsViewModel.loadMovieDetails(movie.movieId)
         }
 
-        // review button code
         reviewButton.setOnClickListener {
             val uri = "https://www.themoviedb.org/movie/${movie.movieId}/reviews".toUri()
             val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -109,7 +119,6 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             }
         }
 
-        // similar movie dummy data
         rvSimilarMovies.layoutManager = GridLayoutManager(requireContext(), 3)
         val dummySimilarMovies = List(6) {
             Movie(
