@@ -9,8 +9,10 @@ import com.bumptech.glide.Glide
 import edu.oregonstate.cs492.MovieWatchListManager.R
 import edu.oregonstate.cs492.MovieWatchListManager.data.Movie
 
-class PosterAdapter(private val movies: List<Movie>) :
-    RecyclerView.Adapter<PosterAdapter.PosterViewHolder>() {
+class PosterAdapter(
+    private val movies: List<Movie>,
+    private val layoutResId: Int = R.layout.movie_poster
+) : RecyclerView.Adapter<PosterAdapter.PosterViewHolder>() {
 
     inner class PosterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val poster: ImageView = view.findViewById(R.id.img_poster)
@@ -18,7 +20,7 @@ class PosterAdapter(private val movies: List<Movie>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PosterViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.movie_poster, parent, false)
+            .inflate(layoutResId, parent, false)
         return PosterViewHolder(view)
     }
 
