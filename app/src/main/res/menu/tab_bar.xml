@@ -11,9 +11,9 @@
     <item
         android:id="@+id/saved"
         android:icon="@drawable/saved_icon"
-        android:title="Saved" />
+        android:title="My List" />
     <item
         android:id="@+id/history"
         android:icon="@drawable/history_icon"
-        android:title="History" />
+        android:title="Watch History" />
 </menu>

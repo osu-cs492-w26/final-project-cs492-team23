@@ -20,13 +20,13 @@
     <fragment
         android:id="@+id/saved"
         android:name="edu.oregonstate.cs492.MovieWatchListManager.ui.SavedFragment"
-        android:label="Saved"
+        android:label="My List"
         tools:layout="@layout/fragment_saved" />
 
     <fragment
         android:id="@+id/history"
         android:name="edu.oregonstate.cs492.MovieWatchListManager.ui.HistoryFragment"
-        android:label="History"
+        android:label="Watch History"
         tools:layout="@layout/fragment_history" />
 
 </navigation>
