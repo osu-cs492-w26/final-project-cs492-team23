@@ -23,17 +23,31 @@ class MainActivity : AppCompatActivity() {
         )
 
         val toolbar = findViewById<MaterialToolbar>(R.id.top_app_bar)
+        setSupportActionBar(toolbar)
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.home) {
                 toolbar.setLogo(R.drawable.movie_icon)
+                toolbar.titleMarginStart = resources.getDimensionPixelSize(R.dimen.toolbar_title_margin_home)
+                toolbar.navigationIcon = null
             } else {
                 toolbar.logo = null
+                toolbar.titleMarginStart = resources.getDimensionPixelSize(R.dimen.toolbar_title_margin_detail)
+            }
+
+            if (destination.id == R.id.category_details) {
+                toolbar.setNavigationIcon(R.drawable.back_arrow_icon)
             }
         }
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNav.setupWithNavController(navController)
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        val navHostFragment = supportFragmentManager
+            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        return navHostFragment.navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

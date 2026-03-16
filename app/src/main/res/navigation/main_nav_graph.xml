@@ -9,7 +9,21 @@
         android:id="@+id/home"
         android:name="edu.oregonstate.cs492.MovieWatchListManager.ui.HomeFragment"
         android:label="Movie Watchlist Manager"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_category_details"
+            app:destination="@id/category_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/category_details"
+        android:name="edu.oregonstate.cs492.MovieWatchListManager.ui.CategoryDetailsFragment"
+        android:label="{categoryTitle}"
+        tools:layout="@layout/fragment_category_details">
+        <argument
+            android:name="categoryTitle"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/search"

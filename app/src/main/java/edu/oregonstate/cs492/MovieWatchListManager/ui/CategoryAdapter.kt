@@ -3,24 +3,39 @@ package edu.oregonstate.cs492.MovieWatchListManager.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.oregonstate.cs492.MovieWatchListManager.R
+import edu.oregonstate.cs492.MovieWatchListManager.data.MovieCategory
 
-class CategoryAdapter(private var categories: List<MovieCategory>) :
-    RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
+class CategoryAdapter(
+    private var categories: List<MovieCategory>,
+    private val onCategoryClick: (MovieCategory) -> Unit
+) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     private val viewPool = RecyclerView.RecycledViewPool()
 
     inner class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val header: View = view.findViewById(R.id.rl_category_header)
         val title: TextView = view.findViewById(R.id.tv_category_title)
+        val forwardArrow: ImageView = view.findViewById(R.id.iv_forward_arrow)
         val moviesRecyclerView: RecyclerView = view.findViewById(R.id.rv_movies)
+
+        init {
+            header.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onCategoryClick(categories[position])
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_category, parent, false)
+            .inflate(R.layout.home_category, parent, false)
         return CategoryViewHolder(view)
     }
 

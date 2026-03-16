@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">MovieWatchListManager</string>
+    <string name="app_name">Movie Watchlist Manager</string>
+    <string name="back">back</string>
 </resources>

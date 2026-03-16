@@ -5,9 +5,11 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.oregonstate.cs492.MovieWatchListManager.R
+import edu.oregonstate.cs492.MovieWatchListManager.data.MovieCategory
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
@@ -24,7 +26,12 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
         val rvCategories = view.findViewById<RecyclerView>(R.id.rv_categories)
-        categoryAdapter = CategoryAdapter(emptyList<MovieCategory>())
+        categoryAdapter = CategoryAdapter(emptyList<MovieCategory>()) { category ->
+            val bundle = Bundle().apply {
+                putString("categoryTitle", category.title)
+            }
+            findNavController().navigate(R.id.action_home_to_category_details, bundle)
+        }
         rvCategories.layoutManager = LinearLayoutManager(requireContext())
         rvCategories.adapter = categoryAdapter
 

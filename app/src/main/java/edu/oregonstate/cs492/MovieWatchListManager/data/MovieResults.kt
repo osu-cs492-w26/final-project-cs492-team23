@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
+import java.io.Serializable
 
 @JsonClass(generateAdapter = true)
 data class MovieResults (
@@ -22,4 +23,4 @@ data class Movie(
     val title: String,
     //If there is a trailer or video associated with the move
     val video: Boolean
-)
+) : Serializable

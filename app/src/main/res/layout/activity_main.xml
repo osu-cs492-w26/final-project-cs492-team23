@@ -10,8 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@android:color/black"
-        android:layout_marginTop="12dp"
-        app:titleMarginStart="22dp"
+        android:layout_marginTop="16dp"
+        app:titleMarginStart="0dp"
+        app:contentInsetStartWithNavigation="0dp"
         app:titleTextColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent" />
 
