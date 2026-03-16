@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.oregonstate.cs492.MovieWatchListManager.R
@@ -27,7 +28,12 @@ class CategoryDetailsFragment : Fragment(R.layout.fragment_category_details) {
         when (categoryTitle) {
             "Now Playing" -> {
                 nowPlayingViewModel.searchResults.observe(viewLifecycleOwner) { movies ->
-                    movies?.let { rvMovies.adapter = CategoryMovieAdapter(it) }
+                    movies?.let { 
+                        rvMovies.adapter = CategoryMovieAdapter(it) { movie ->
+                            val action = CategoryDetailsFragmentDirections.actionCategoryDetailsToMovieDetails(movie)
+                            findNavController().navigate(action)
+                        } 
+                    }
                 }
                 viewLifecycleOwner.lifecycleScope.launch {
                     nowPlayingViewModel.loadNowPlayingMovies()
@@ -35,7 +41,12 @@ class CategoryDetailsFragment : Fragment(R.layout.fragment_category_details) {
             }
             "Upcoming" -> {
                 upcomingViewModel.searchResults.observe(viewLifecycleOwner) { movies ->
-                    movies?.let { rvMovies.adapter = CategoryMovieAdapter(it) }
+                    movies?.let { 
+                        rvMovies.adapter = CategoryMovieAdapter(it) { movie ->
+                            val action = CategoryDetailsFragmentDirections.actionCategoryDetailsToMovieDetails(movie)
+                            findNavController().navigate(action)
+                        } 
+                    }
                 }
                 viewLifecycleOwner.lifecycleScope.launch {
                     upcomingViewModel.loadUpcomingMovies()
@@ -43,7 +54,12 @@ class CategoryDetailsFragment : Fragment(R.layout.fragment_category_details) {
             }
             "Popular" -> {
                 popularViewModel.searchResults.observe(viewLifecycleOwner) { movies ->
-                    movies?.let { rvMovies.adapter = CategoryMovieAdapter(it) }
+                    movies?.let { 
+                        rvMovies.adapter = CategoryMovieAdapter(it) { movie ->
+                            val action = CategoryDetailsFragmentDirections.actionCategoryDetailsToMovieDetails(movie)
+                            findNavController().navigate(action)
+                        } 
+                    }
                 }
                 viewLifecycleOwner.lifecycleScope.launch {
                     popularViewModel.loadPopularMovies()
@@ -51,7 +67,12 @@ class CategoryDetailsFragment : Fragment(R.layout.fragment_category_details) {
             }
             "Top Rated" -> {
                 topRatedViewModel.searchResults.observe(viewLifecycleOwner) { movies ->
-                    movies?.let { rvMovies.adapter = CategoryMovieAdapter(it) }
+                    movies?.let { 
+                        rvMovies.adapter = CategoryMovieAdapter(it) { movie ->
+                            val action = CategoryDetailsFragmentDirections.actionCategoryDetailsToMovieDetails(movie)
+                            findNavController().navigate(action)
+                        } 
+                    }
                 }
                 viewLifecycleOwner.lifecycleScope.launch {
                     topRatedViewModel.loadTopRatedMovies()

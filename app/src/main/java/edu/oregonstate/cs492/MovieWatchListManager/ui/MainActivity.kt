@@ -1,6 +1,8 @@
 package edu.oregonstate.cs492.MovieWatchListManager.ui
 
 import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,7 +19,8 @@ class MainActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        
+        val loadingIndicator = findViewById<ProgressBar>(R.id.loading_indicator)
+
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.home, R.id.search, R.id.saved, R.id.history)
         )
@@ -27,6 +30,14 @@ class MainActivity : AppCompatActivity() {
         toolbar.setupWithNavController(navController, appBarConfiguration)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
+            // Show loading indicator when starting navigation
+            loadingIndicator.visibility = View.VISIBLE
+
+            // Post a delayed hide to simulate the loading feeling or wait for actual fragment load
+            loadingIndicator.postDelayed({
+                loadingIndicator.visibility = View.GONE
+            }, 300)
+
             if (destination.id == R.id.home) {
                 toolbar.setLogo(R.drawable.movie_icon)
                 toolbar.titleMarginStart = resources.getDimensionPixelSize(R.dimen.toolbar_title_margin_home)
@@ -36,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 toolbar.titleMarginStart = resources.getDimensionPixelSize(R.dimen.toolbar_title_margin_detail)
             }
 
-            if (destination.id == R.id.category_details) {
+            if (destination.id == R.id.category_details || destination.id == R.id.movie_details) {
                 toolbar.setNavigationIcon(R.drawable.back_arrow_icon)
             }
         }

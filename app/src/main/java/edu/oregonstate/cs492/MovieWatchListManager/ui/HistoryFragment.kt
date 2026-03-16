@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.oregonstate.cs492.MovieWatchListManager.R
@@ -22,7 +23,10 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         viewModel.searchResults.observe(viewLifecycleOwner) { movies ->
             movies?.let {
                 //  "random" watched movies
-                rvHistoryMovies.adapter = CategoryMovieAdapter(it.shuffled().take(8))
+                rvHistoryMovies.adapter = CategoryMovieAdapter(it.shuffled().take(8)) { movie ->
+                    val action = HistoryFragmentDirections.actionHistoryToMovieDetails(movie)
+                    findNavController().navigate(action)
+                }
             }
         }
 

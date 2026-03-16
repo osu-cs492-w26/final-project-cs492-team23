@@ -26,12 +26,19 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         super.onViewCreated(view, savedInstanceState)
 
         val rvCategories = view.findViewById<RecyclerView>(R.id.rv_categories)
-        categoryAdapter = CategoryAdapter(emptyList<MovieCategory>()) { category ->
-            val bundle = Bundle().apply {
-                putString("categoryTitle", category.title)
+        categoryAdapter = CategoryAdapter(
+            categories = emptyList(),
+            onCategoryClick = { category ->
+                val bundle = Bundle().apply {
+                    putString("categoryTitle", category.title)
+                }
+                findNavController().navigate(R.id.action_home_to_category_details, bundle)
+            },
+            onMovieClick = { movie ->
+                val action = HomeFragmentDirections.actionHomeToMovieDetails(movie)
+                findNavController().navigate(action)
             }
-            findNavController().navigate(R.id.action_home_to_category_details, bundle)
-        }
+        )
         rvCategories.layoutManager = LinearLayoutManager(requireContext())
         rvCategories.adapter = categoryAdapter
 

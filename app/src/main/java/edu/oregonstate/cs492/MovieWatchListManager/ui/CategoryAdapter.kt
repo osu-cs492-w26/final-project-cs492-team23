@@ -8,11 +8,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.oregonstate.cs492.MovieWatchListManager.R
+import edu.oregonstate.cs492.MovieWatchListManager.data.Movie
 import edu.oregonstate.cs492.MovieWatchListManager.data.MovieCategory
 
 class CategoryAdapter(
     private var categories: List<MovieCategory>,
-    private val onCategoryClick: (MovieCategory) -> Unit
+    private val onCategoryClick: (MovieCategory) -> Unit,
+    private val onMovieClick: (Movie) -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 
     private val viewPool = RecyclerView.RecycledViewPool()
@@ -43,7 +45,7 @@ class CategoryAdapter(
         val category = categories[position]
         holder.title.text = category.title
 
-        val movieAdapter = PosterAdapter(category.movies)
+        val movieAdapter = PosterAdapter(category.movies, onMovieClick = onMovieClick)
 
         holder.moviesRecyclerView.apply {
             adapter = movieAdapter

@@ -11,11 +11,21 @@ import edu.oregonstate.cs492.MovieWatchListManager.data.Movie
 
 class PosterAdapter(
     private val movies: List<Movie>,
-    private val layoutResId: Int = R.layout.movie_poster
+    private val layoutResId: Int = R.layout.movie_poster,
+    private val onMovieClick: (Movie) -> Unit
 ) : RecyclerView.Adapter<PosterAdapter.PosterViewHolder>() {
 
     inner class PosterViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val poster: ImageView = view.findViewById(R.id.img_poster)
+
+        init {
+            view.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onMovieClick(movies[position])
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PosterViewHolder {

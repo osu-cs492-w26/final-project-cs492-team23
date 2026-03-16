@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_home_to_category_details"
             app:destination="@id/category_details" />
+        <action
+            android:id="@+id/action_home_to_movie_details"
+            app:destination="@id/movie_details" />
     </fragment>
 
     <fragment
@@ -23,24 +26,52 @@
         <argument
             android:name="categoryTitle"
             app:argType="string" />
+        <action
+            android:id="@+id/action_category_details_to_movie_details"
+            app:destination="@id/movie_details" />
     </fragment>
 
     <fragment
         android:id="@+id/search"
         android:name="edu.oregonstate.cs492.MovieWatchListManager.ui.SearchFragment"
         android:label="Search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search">
+        <action
+            android:id="@+id/action_search_to_movie_details"
+            app:destination="@id/movie_details" />
+    </fragment>
 
     <fragment
         android:id="@+id/saved"
         android:name="edu.oregonstate.cs492.MovieWatchListManager.ui.SavedFragment"
         android:label="My List"
-        tools:layout="@layout/fragment_saved" />
+        tools:layout="@layout/fragment_saved">
+        <action
+            android:id="@+id/action_saved_to_movie_details"
+            app:destination="@id/movie_details" />
+    </fragment>
 
     <fragment
         android:id="@+id/history"
         android:name="edu.oregonstate.cs492.MovieWatchListManager.ui.HistoryFragment"
         android:label="Watch History"
-        tools:layout="@layout/fragment_history" />
+        tools:layout="@layout/fragment_history">
+        <action
+            android:id="@+id/action_history_to_movie_details"
+            app:destination="@id/movie_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movie_details"
+        android:name="edu.oregonstate.cs492.MovieWatchListManager.ui.MovieDetailsFragment"
+        android:label="Movie Details"
+        tools:layout="@layout/fragment_movie_details">
+        <argument
+            android:name="movie"
+            app:argType="edu.oregonstate.cs492.MovieWatchListManager.data.Movie" />
+        <action
+            android:id="@+id/action_movie_details_self"
+            app:destination="@id/movie_details" />
+    </fragment>
 
 </navigation>

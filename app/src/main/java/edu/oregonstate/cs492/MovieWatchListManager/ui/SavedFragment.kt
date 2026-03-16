@@ -5,6 +5,7 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.oregonstate.cs492.MovieWatchListManager.R
@@ -21,8 +22,11 @@ class SavedFragment : Fragment(R.layout.fragment_saved) {
 
         viewModel.searchResults.observe(viewLifecycleOwner) { movies ->
             movies?.let {
-                //"random" saved movies
-                rvSavedMovies.adapter = CategoryMovieAdapter(it.shuffled().take(6))
+                // "random" saved movies
+                rvSavedMovies.adapter = CategoryMovieAdapter(it.shuffled().take(6)) { movie ->
+                    val action = SavedFragmentDirections.actionSavedToMovieDetails(movie)
+                    findNavController().navigate(action)
+                }
             }
         }
 

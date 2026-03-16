@@ -10,15 +10,26 @@ import com.bumptech.glide.Glide
 import edu.oregonstate.cs492.MovieWatchListManager.R
 import edu.oregonstate.cs492.MovieWatchListManager.data.Movie
 
-class CategoryMovieAdapter(private val movies: List<Movie>) :
-    RecyclerView.Adapter<CategoryMovieAdapter.MovieViewHolder>() {
+class CategoryMovieAdapter(
+    private val movies: List<Movie>,
+    private val onMovieClick: (Movie) -> Unit
+) : RecyclerView.Adapter<CategoryMovieAdapter.MovieViewHolder>() {
 
-    class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val poster: ImageView = view.findViewById(R.id.iv_movie_poster)
         val title: TextView = view.findViewById(R.id.tv_movie_title)
         val date: TextView = view.findViewById(R.id.tv_movie_date)
         val genre1: TextView = view.findViewById(R.id.tv_genre1)
         val genre2: TextView = view.findViewById(R.id.tv_genre2)
+
+        init {
+            view.setOnClickListener {
+                val position = bindingAdapterPosition
+                if (position != RecyclerView.NO_POSITION) {
+                    onMovieClick(movies[position])
+                }
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
