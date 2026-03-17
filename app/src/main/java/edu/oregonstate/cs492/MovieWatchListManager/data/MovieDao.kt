@@ -9,12 +9,12 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface MovieDao {
     @Insert
-    suspend fun  insert(movie: Movie)
+    suspend fun  insert(movie: MovieEntity)
 
     @Delete
-    suspend fun  delete(movie: Movie)
+    suspend fun  delete(movie: MovieEntity)
 
-    @Query("SELECT * FROM Movie")
-    fun getAllMoviesInList(): Flow<List<Movie>>
+    @Query("SELECT * FROM MovieEntity")
+    fun getAllMoviesInList(): Flow<List<MovieEntity>>
 
 }

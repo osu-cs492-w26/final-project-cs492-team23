@@ -20,6 +20,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import edu.oregonstate.cs492.MovieWatchListManager.R
+import edu.oregonstate.cs492.MovieWatchListManager.data.Genre
 import edu.oregonstate.cs492.MovieWatchListManager.data.Movie
 import kotlinx.coroutines.launch
 
@@ -48,8 +49,9 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         tvTitle.text = movie.title
         tvReleaseDate.text = movie.releaseDate
         tvOverview.text = movie.overview
-        tvGenre1.text = "Action"
-        tvGenre2.text = "Drama"
+        val genres = Genre.getGenreNames(movie.genreIDs)
+        tvGenre1.text = genres.getOrNull(0) ?: "" //"Action"
+        tvGenre2.text = genres.getOrNull(1) ?: ""
 
         val youtubePlayerView = view.findViewById<YouTubePlayerView>(R.id.youtube_player_view)
         lifecycle.addObserver(youtubePlayerView)
@@ -127,7 +129,8 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
                 posterPath = "",
                 releaseDate = "2024-01-01",
                 title = "Similar Movie ${it + 1}",
-                video = false
+                video = false,
+                genreIDs = emptyList()
             )
         }
         rvSimilarMovies.adapter = PosterAdapter(dummySimilarMovies, R.layout.movie_poster_search) { similarMovie ->

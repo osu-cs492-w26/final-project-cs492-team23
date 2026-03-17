@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import edu.oregonstate.cs492.MovieWatchListManager.R
+import edu.oregonstate.cs492.MovieWatchListManager.data.Genre
 import edu.oregonstate.cs492.MovieWatchListManager.data.Movie
 
 class CategoryMovieAdapter(
@@ -49,10 +50,11 @@ class CategoryMovieAdapter(
             .placeholder(android.R.drawable.progress_horizontal)
             .error(android.R.drawable.stat_notify_error)
             .into(holder.poster)
-            
+
         // placeholders for genres
-        holder.genre1.text = "Action"
-        holder.genre2.text = "Drama"
+        val genres = Genre.getGenreNames(movie.genreIDs)
+        holder.genre1.text = genres.getOrNull(0) ?: ""
+        holder.genre2.text = genres.getOrNull(1) ?: ""
     }
 
     override fun getItemCount() = movies.size

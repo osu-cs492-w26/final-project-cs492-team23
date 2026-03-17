@@ -25,7 +25,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 posterPath = "",
                 releaseDate = "2024-01-01",
                 title = "fewofh ${it + 1}",
-                video = false
+                video = false,
+                genreIDs = emptyList()
             )
         }
 
