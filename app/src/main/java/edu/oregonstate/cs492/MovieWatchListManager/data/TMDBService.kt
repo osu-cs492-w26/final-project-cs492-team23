@@ -79,7 +79,12 @@ interface TMDBService {
         @Query("api_key") key: String =  api_key
     ): Response<StreamingServices>
 
-
+    //GET /movie/{movie_id}/similar
+    @GET("movie/{movie_id}/similar")
+    suspend fun getSimilarMovies(
+        @Path("movie_id") movieId: Int,
+        @Query("api_key") key: String =  api_key
+    ): Response<MovieResults>
 
     companion object {
 

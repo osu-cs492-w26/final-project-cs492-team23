@@ -43,7 +43,9 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
     private val streamingViewModel: StreamingServicesViewModel by viewModels()
     private val detailsViewModel: MovieDetailsViewModel by viewModels()
     private val movieListViewModel: MovieListViewModel by viewModels()
+    private val similarMoviesViewModel: SimilarMoviesViewModel by viewModels()
     private var youTubePlayer: YouTubePlayer? = null
+    private var youtubePlayerView: YouTubePlayerView? = null
     private var currentVideoId: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,7 +58,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
         val tvOverview = view.findViewById<TextView>(R.id.tv_overview)
         val tvRuntime = view.findViewById<TextView>(R.id.tv_runtime)
         val reviewButton = view.findViewById<TextView>(R.id.review_button)
-//        val rvSimilarMovies = view.findViewById<RecyclerView>(R.id.rv_similar_movies)
+        val rvSimilarMovies = view.findViewById<RecyclerView>(R.id.rv_similar_movies)
         val streamingContainer = view.findViewById<LinearLayout>(R.id.streaming_container)
         val genreContainer = view.findViewById<LinearLayout>(R.id.ll_genres)
         val addToListButton = view.findViewById<Button>(R.id.btn_add_to_list)
@@ -194,43 +196,21 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             }
         }
 
-//        movieListViewModel.movieList.observe(viewLifecycleOwner) { movies ->
-//            if (movies.any { it.movieId == movie.movieId }) {
-//                addToListButton.text = "- My List"
-//                addToListButton.setOnClickListener {
-//                    movieListViewModel.removeMovieFromList(movie)
-//                }
-//            } else {
-//                addToListButton.text = "+ My List"
-//                addToListButton.setOnClickListener {
-//                    movieListViewModel.addMovieToList(movie)
-//                    val snackbar = Snackbar.make(
-//                        view,
-//                        "Added to watchlist",
-//                        Snackbar.LENGTH_LONG
-//                    )
-//                    snackbar.setAction("UNDO") {
-//                        movieListViewModel.removeMovieFromList(movie)
-//                    }
-//                    snackbar.show()
-//                }
-//            }
-//        }
-
         movieListViewModel.movieList.observe(viewLifecycleOwner) { updateButtons() }
         movieListViewModel.movieHistory.observe(viewLifecycleOwner) { updateButtons() }
 
-        val youtubePlayerView = view.findViewById<YouTubePlayerView>(R.id.youtube_player_view)
-        lifecycle.addObserver(youtubePlayerView)
-
-        youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
-            override fun onReady(youTubePlayer: YouTubePlayer) {
-                this@MovieDetailsFragment.youTubePlayer = youTubePlayer
-                currentVideoId?.let {
-                    youTubePlayer.cueVideo(it, 0F)
+        youtubePlayerView = view.findViewById(R.id.youtube_player_view)
+        youtubePlayerView?.let { ytpv ->
+            lifecycle.addObserver(ytpv)
+            ytpv.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    this@MovieDetailsFragment.youTubePlayer = youTubePlayer
+                    currentVideoId?.let {
+                        youTubePlayer.cueVideo(it, 0F)
+                    }
                 }
-            }
-        })
+            })
+        }
 
         videosViewModel.searchResults.observe(viewLifecycleOwner) { videos ->
             val trailer = videos?.find { it.type == "Trailer" } ?: videos?.firstOrNull()
@@ -276,6 +256,7 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             videosViewModel.loadMovieVideos(movie.movieId)
             streamingViewModel.loadStreamingServices(movie.movieId)
             detailsViewModel.loadMovieDetails(movie.movieId)
+            similarMoviesViewModel.loadSearchResults(movie.movieId)
         }
 
         reviewButton.setOnClickListener {
@@ -288,23 +269,25 @@ class MovieDetailsFragment : Fragment(R.layout.fragment_movie_details) {
             }
         }
 
-//        rvSimilarMovies.layoutManager = GridLayoutManager(requireContext(), 3)
-//        val dummySimilarMovies = List(6) {
-//            Movie(
-//                movieId = it + 500,
-//                overview = "Similar movie overview.",
-//                posterPath = "",
-//                releaseDate = "2024-01-01",
-//                title = "Similar Movie ${it + 1}",
-//                video = false,
-//                genreIDs = emptyList()
-//            )
-//        }
-//        rvSimilarMovies.adapter = PosterAdapter(dummySimilarMovies, R.layout.movie_poster_search) { similarMovie ->
-//            val bundle = Bundle().apply {
-//                putSerializable("movie", similarMovie)
-//            }
-//            findNavController().navigate(R.id.action_movie_details_self, bundle)
-//        }
+        rvSimilarMovies.layoutManager = GridLayoutManager(requireContext(), 3)
+        similarMoviesViewModel.searchResults.observe(viewLifecycleOwner) { movies ->
+            movies?.let {
+                rvSimilarMovies.adapter = PosterAdapter(movies, R.layout.movie_poster_search) { movie ->
+                    val action = MovieDetailsFragmentDirections.actionMovieDetailsSelf(movie)
+                    findNavController().navigate(action)
+                }
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        youtubePlayerView?.let { ytpv ->
+            lifecycle.removeObserver(ytpv)
+            ytpv.release()
+        }
+        youTubePlayer = null
+        youtubePlayerView = null
+
+        super.onDestroyView()
     }
 }
