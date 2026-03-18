@@ -17,7 +17,8 @@ interface TMDBService {
     suspend fun getNowPlayingMovies(
         @Query("language") lang: String = "en-US",
         @Query("page") page: Int = 1,
-        @Query("api_key") key: String =  api_key
+        @Query("api_key") key: String =  api_key,
+        @Query("region") region: String = "us"
     ): Response<MovieResults>
 
     //GET /movie/popular
@@ -25,7 +26,8 @@ interface TMDBService {
     suspend fun getPopularMovies(
         @Query("language") lang: String = "en-US",
         @Query("page") page: Int = 1,
-        @Query("api_key") key: String =  api_key
+        @Query("api_key") key: String =  api_key,
+        @Query("region") region: String = "us"
     ): Response<MovieResults>
 
     //GET /movie/top_rated
@@ -33,7 +35,8 @@ interface TMDBService {
     suspend fun getTopRatedMovies(
         @Query("language") lang: String = "en-US",
         @Query("page") page: Int = 1,
-        @Query("api_key") key: String =  api_key
+        @Query("api_key") key: String =  api_key,
+        @Query("region") region: String = "us"
     ): Response<MovieResults>
 
     //GET /movie/upcoming
@@ -41,7 +44,8 @@ interface TMDBService {
     suspend fun getUpcomingMovies(
         @Query("language") lang: String = "en-US",
         @Query("page") page: Int = 1,
-        @Query("api_key") key: String =  api_key
+        @Query("api_key") key: String =  api_key,
+        @Query("region") region: String = "us"
     ): Response<MovieResults>
 
     //GET /search/movie
