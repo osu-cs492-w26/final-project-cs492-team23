@@ -4,4 +4,8 @@
     <dimen name="toolbar_title_margin_detail">0dp</dimen>
     <dimen name="stream_logo_size">48dp</dimen>
     <dimen name="stream_logo_margin">12dp</dimen>
+    <dimen name="genre_padding_h">8dp</dimen>
+    <dimen name="genre_padding_v">2dp</dimen>
+    <dimen name="genre_margin_end">6dp</dimen>
+    <dimen name="genre_corner">12dp</dimen>
 </resources>

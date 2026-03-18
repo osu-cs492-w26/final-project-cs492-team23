@@ -10,7 +10,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.marginEnd
 import androidx.core.view.marginRight
 import androidx.recyclerview.widget.RecyclerView
@@ -18,17 +17,19 @@ import com.bumptech.glide.Glide
 import edu.oregonstate.cs492.MovieWatchListManager.R
 import edu.oregonstate.cs492.MovieWatchListManager.data.Genre
 import edu.oregonstate.cs492.MovieWatchListManager.data.Movie
+import edu.oregonstate.cs492.MovieWatchListManager.data.WatchHistoryWithMovie
 
-class CategoryMovieAdapter(
-    private val movies: List<Movie>,
-    private val onMovieClick: (Movie) -> Unit
-) : RecyclerView.Adapter<CategoryMovieAdapter.MovieViewHolder>() {
+class HistoryMovieAdapter(
+    private val movies: List<WatchHistoryWithMovie>,
+    private val onMovieClick: (WatchHistoryWithMovie) -> Unit
+) : RecyclerView.Adapter<HistoryMovieAdapter.MovieViewHolder>() {
 
     inner class MovieViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val poster: ImageView = view.findViewById(R.id.iv_movie_poster)
         val title: TextView = view.findViewById(R.id.tv_movie_title)
         val date: TextView = view.findViewById(R.id.tv_movie_date)
         val genreContainer: LinearLayout = view.findViewById(R.id.ll_genres)
+        val rating: TextView = view.findViewById(R.id.tv_movie_rating)
 
         init {
             view.setOnClickListener {
@@ -42,14 +43,15 @@ class CategoryMovieAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_category_movie, parent, false)
+            .inflate(R.layout.item_category_movie_history, parent, false)
         return MovieViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        val movie = movies[position]
+        val movie = movies[position].movie
         holder.title.text = movie.title
         holder.date.text = movie.releaseDate
+        holder.rating.text = "${movies[position].history.rating}/10"
 
         val fullPosterUrl = "https://image.tmdb.org/t/p/w500${movie.posterPath}"
         Glide.with(holder.poster.context)
@@ -82,9 +84,9 @@ class CategoryMovieAdapter(
                 )
                 params.marginEnd = resources.getDimensionPixelSize(R.dimen.genre_margin_end)
                 layoutParams = params
-                val drawable = ContextCompat.getDrawable(holder.genreContainer.context, R.drawable.bg_genre)?.mutate()
-                drawable?.let {
-                    DrawableCompat.setTint(it, ContextCompat.getColor(holder.genreContainer.context, genreColors[genreId] ?: R.color.genre_default))
+                val drawable = GradientDrawable().apply {
+                    cornerRadius = resources.getDimensionPixelSize(R.dimen.genre_corner).toFloat()
+                    setColor(ContextCompat.getColor(holder.genreContainer.context, genreColors[genreId] ?: R.color.genre_default))
                 }
                 background = drawable
             }

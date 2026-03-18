@@ -1,7 +1,6 @@
 package edu.oregonstate.cs492.MovieWatchListManager.ui
 
 import android.os.Bundle
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -45,6 +44,15 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
         bottomNav.setupWithNavController(navController)
+        bottomNav.setOnItemSelectedListener { item ->
+            val navOptions = androidx.navigation.NavOptions.Builder()
+                .setLaunchSingleTop(true)
+                .setRestoreState(true)
+                .setPopUpTo(navController.graph.startDestinationId, false)
+                .build()
+            navController.navigate(item.itemId, null, navOptions)
+            true
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

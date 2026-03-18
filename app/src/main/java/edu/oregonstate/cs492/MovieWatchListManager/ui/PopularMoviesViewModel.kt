@@ -3,10 +3,12 @@ package edu.oregonstate.cs492.MovieWatchListManager.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import edu.oregonstate.cs492.MovieWatchListManager.data.Movie
 import edu.oregonstate.cs492.MovieWatchListManager.data.PopularMoviesRepository
 import edu.oregonstate.cs492.MovieWatchListManager.data.TMDBService
 import edu.oregonstate.cs492.MovieWatchListManager.util.LoadingStatus
+import kotlinx.coroutines.launch
 
 class PopularMoviesViewModel: ViewModel() {
     private val repository = PopularMoviesRepository(TMDBService.Companion.create())
@@ -20,14 +22,16 @@ class PopularMoviesViewModel: ViewModel() {
     private val _errorMessage = MutableLiveData<String?>(null)
     val errorMessage: LiveData<String?> = _errorMessage
 
-    suspend fun loadPopularMovies(){
-        _loadingStatus.value = LoadingStatus.LOADING
-        val result = repository.loadPopularMovies()
-        _searchResults.value = result.getOrNull()
-        _errorMessage.value = result.exceptionOrNull()?.message
-        _loadingStatus.value = when(result.isSuccess){
-            true-> LoadingStatus.SUCCESS
-            false-> LoadingStatus.ERROR
+    fun loadPopularMovies(){
+        viewModelScope.launch {
+            _loadingStatus.value = LoadingStatus.LOADING
+            val result = repository.loadPopularMovies()
+            _searchResults.value = result.getOrNull()
+            _errorMessage.value = result.exceptionOrNull()?.message
+            _loadingStatus.value = when (result.isSuccess) {
+                true -> LoadingStatus.SUCCESS
+                false -> LoadingStatus.ERROR
+            }
         }
     }
 }

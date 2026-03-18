@@ -22,7 +22,6 @@ class CategoryAdapter(
     inner class CategoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val header: View = view.findViewById(R.id.rl_category_header)
         val title: TextView = view.findViewById(R.id.tv_category_title)
-        val forwardArrow: ImageView = view.findViewById(R.id.iv_forward_arrow)
         val moviesRecyclerView: RecyclerView = view.findViewById(R.id.rv_movies)
 
         init {

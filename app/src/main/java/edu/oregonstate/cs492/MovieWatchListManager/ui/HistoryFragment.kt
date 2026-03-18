@@ -9,10 +9,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import edu.oregonstate.cs492.MovieWatchListManager.R
+import edu.oregonstate.cs492.MovieWatchListManager.data.toMovie
 import kotlinx.coroutines.launch
 
 class HistoryFragment : Fragment(R.layout.fragment_history) {
-    private val viewModel: TopRatedMoviesViewModel by viewModels()
+    private val viewModel: MovieListViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -20,18 +21,13 @@ class HistoryFragment : Fragment(R.layout.fragment_history) {
         val rvHistoryMovies = view.findViewById<RecyclerView>(R.id.rv_history_movies)
         rvHistoryMovies.layoutManager = LinearLayoutManager(requireContext())
 
-        viewModel.searchResults.observe(viewLifecycleOwner) { movies ->
+        viewModel.movieHistory.observe(viewLifecycleOwner) { movies ->
             movies?.let {
-                //  "random" watched movies
-                rvHistoryMovies.adapter = CategoryMovieAdapter(it.shuffled().take(8)) { movie ->
-                    val action = HistoryFragmentDirections.actionHistoryToMovieDetails(movie)
+                rvHistoryMovies.adapter = HistoryMovieAdapter(movies) { movie ->
+                    val action = HistoryFragmentDirections.actionHistoryToMovieDetails(movie.movie.toMovie())
                     findNavController().navigate(action)
                 }
             }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.loadTopRatedMovies()
         }
     }
 }

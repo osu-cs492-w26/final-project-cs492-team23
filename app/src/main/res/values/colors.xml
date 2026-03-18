@@ -9,4 +9,25 @@
     <color name="white">#FFFFFFFF</color>
     <color name="gray_placeholder">#CCCCCC</color>
     <color name="dark_gray">#121212</color>
+
+    <color name="genre_action">#E53935</color>
+    <color name="genre_animation">#43A047</color>
+    <color name="genre_adventure">#FB8C00</color>
+    <color name="genre_comedy">#FFC107</color>
+    <color name="genre_crime">#6D4C41</color>
+    <color name="genre_documentary">#9E9E9E</color>
+    <color name="genre_drama">#1E88E5</color>
+    <color name="genre_family">#8BC34A</color>
+    <color name="genre_fantasy">#7E57C2</color>
+    <color name="genre_history">#4DB6AC</color>
+    <color name="genre_horror">#B71C1C</color>
+    <color name="genre_music">#FF4081</color>
+    <color name="genre_mystery">#673AB7</color>
+    <color name="genre_romance">#E91E63</color>
+    <color name="genre_scifi">#00ACC1</color>
+    <color name="genre_tvmovie">#9C27B0</color>
+    <color name="genre_thriller">#AD1457</color>
+    <color name="genre_war">#455A64</color>
+    <color name="genre_western">#8A520C</color>
+    <color name="genre_default">#757575</color>
 </resources>
