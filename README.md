@@ -28,6 +28,6 @@ Movie Watchlist Manager is an Android application that allows users to explore m
 
 ## Contributors
 
-Navigation and Database - Owen Jones
-API integration - Aidan Daly
-UI/UX - Téa Kidder
+- Navigation and Database - Owen Jones
+- API integration - Aidan Daly
+- UI/UX - Téa Kidder
